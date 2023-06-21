@@ -1,12 +1,12 @@
-// import Vue from 'vue'
-// import Vuex from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-// import market from './market.module'
+import market from './market.module'
 
-// Vue.use(Vuex)
+Vue.use(Vuex)
 
-// export default new Vuex.Store({
-//   modules: {
-//     market
-//   }
-// })
+export default new Vuex.Store({
+  modules: {
+    market
+  }
+})
