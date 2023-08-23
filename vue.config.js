@@ -1,5 +1,9 @@
 module.exports = {
   transpileDependencies: [
-    'vuetify'
+    'vuetify',
+    watchOptions = {
+      aggregateTimeout: 200,
+      poll: 1000,
+    },
   ]
 }

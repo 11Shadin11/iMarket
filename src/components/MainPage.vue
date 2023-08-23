@@ -1,48 +1,62 @@
 <template lang="pug">
-  v-row.cafes__comp
-    v-col
+div
+  div(v-if="!searchBlockFlag")
+    div
       banner
-      h1.cafes__list-title.text-h4.py-5 Популярыне категории ⭐
-      br
-      v-row.cafes__list.mx-2.mb-3
-        div( v-for="el in categories" md="4")
-          div.iconCategories(style="padding:20px; margin:10px")
-            v-icon(color="#2d2d2d") {{el.mdi}}
+      h1 Популярные категории ⭐
+      
+    div.categoriesList
+      div( v-for="el in categories" md="4")
+        div.icon-categories
+          v-icon(color="#2d2d2d") {{el.mdi}}
 
-    v-col
-      h1.cafes__list-title.text-h4.py-5 Горячие скидки 🔥
-      br
-      v-row.cafes__list.mx-2.mb-3
+    div
+      h1.text-h4.py-5 Горячие скидки 🔥
+      v-row.mx-2.mb-3
         v-col( v-for="item in product" :key="item.id" md="4")
-          v-card(@click="openProductPage(item)")
-            v-img(height="250" :src="item.img")
-            v-card-title
-              span.itemName {{ item.name }}
-            v-card-text
-              p.itemName {{ item.description }}
+          v-card.product-card(@click="openProductPage(item)")
+            v-img.product-card-image(:src="item.img")
+            div
+              span.item-name {{ item.name }}
+            div
+              p.item-name {{ item.description }}
 
             v-card-text
               p(style="text-decoration:line-through") {{ item.discount }}
             v-card-title
-              span.itemName(style="color:#fc8507") {{item.price}}
+              span.item-name(style="color:#fc8507") {{item.price}}
+            div.backet-button-block
+              v-btn.backet-button( v-if="!checkProdutInBacket(item.id)" color="primary" elevation="10" @click.stop="addToBacket(item)") Добавить в корзину
+              v-btn.backet-button( v-else color="red" elevation="10" @click.stop="goToBacket") В корзине
+                v-icon mdi-basket-check
+  div(v-else)
+    div(v-if="findedProducts.length")
+      span Мы нашли {{findedProducts.length}} товара по вашем запросу.
+      v-row.mx-2.mb-3
+        v-col( v-for="item in findedProducts" :key="item.id" md="4")
+          v-card.product-card(@click="openProductPage(item)")
+            v-img.product-card-image(:src="item.img")
+            div
+              span.item-name {{ item.name }}
+            div
+              p.item-name {{ item.description }}
 
-            v-btn( color="primary" elevation="10" block) В корзину
-    v-dialog(v-model="dialog" width="500")
-      v-card
-        v-card-title Privacy Policy
-
-        v-card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-        v-divider
-
-        v-card-actions
-          v-spacer
-          v-btn(color="primary" text @click="dialog = false" ) I accept
+            v-card-text
+              p(style="text-decoration:line-through") {{ item.discount }}
+            v-card-title
+              span.item-name(style="color:#fc8507") {{item.price}}
+            div.backet-button-block
+              v-btn.backet-button( v-if="!checkProdutInBacket(item.id)" color="primary" elevation="10" @click.stop="addToBacket(item)") Добавить в корзину
+              v-btn.backet-button( v-else color="red" elevation="10" @click.stop="goToBacket") В корзине
+                v-icon mdi-basket-check
+    div(v-else)
+      span По вашему запросу товаров сейчас нет.
 </template>
 
 <script>
 import Banner from './Banner'
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+
 export default {
   name: 'Cafe',
   
@@ -51,46 +65,90 @@ export default {
   },
   
   data: () => ({
-    dialog:false
   }),
 
   computed: {
-    ...mapState('market', ['product', 'categories'])
-
+    ...mapState('market', ['product', 'categories', 'backetProduts', 'searchBlockFlag', 'findedProducts'])
   },
 
   methods:{
+    ...mapMutations('market', ['setProductInBasket']),
+
+    checkProdutInBacket(itemId) {
+      if(this.backetProduts.length) {
+        const id = this.backetProduts.map(el => el.id)
+        return id.includes(itemId)
+      }
+      return false
+    },
+
     openProductPage(item){
-      item
-      this.dialog = true
-      // localStorage.setItem('allProducts', JSON.stringify(this.product));
-      // localStorage.setItem('selectedProducts', JSON.stringify(item));
-      // this.$router.push({path:'/view'})
-    }   
+      localStorage.setItem('selectedProducts', JSON.stringify(item));
+      this.$router.push({path:'/view'})
+    },
+
+    addToBacket(item) {
+      this.setProductInBasket(item)
+    },
+
+    goToBacket() {
+      this.$router.push({path:'/basket'})
+    }
   }
 }
 </script>
 <style scoped>
 .v-card{
   padding: 20px !important;
-  height: 580px;
+  height: 100%;
   cursor: pointer;
   transform: scale(1);
   transition: transform 1s;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow .5s;
 }
 .v-card:hover{
-  transform: scale(1.07);
-  box-shadow: 10px 10px 10px #000;
-  transition: transform 1s, box-shadow .5s;
+  box-shadow: 0 0 10px #000;
 }
-.itemName{
+.item-name{
   word-break: break-word;
 }
-.iconCategories{
+.icon-categories{
+  padding:20px; 
+  margin:10px; 
+  width:60px;
   border-radius: 20px;
   background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: box-shadow .5s ;
+}
+.icon-categories:hover {
+  box-shadow: 0px 0px 10px #000;
 }
 .v-card__subtitle, .v-card__text, .v-card__title {
   padding: 5px !important;
+}
+.categoriesList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.backet-button-block {
+  width: 100%;
+}
+.backet-button {
+  width: inherit;
+}
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+.product-card-image {
+  transform: scale(0.8);
 }
 </style>

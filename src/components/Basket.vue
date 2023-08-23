@@ -1,4 +1,8 @@
 <template lang="pug">
+div
+  v-row
+    v-col
+      v-breadcrumbs( :items="breadcrumbs" large)
   div.bac-grey
     v-col( md="6")
       div.leftBlock
@@ -24,64 +28,111 @@
                   v-btn(color="warning" fab dark)
                     v-icon mdi-account-circle
                   span(style="padding-left:10px") Иванов Иван  
-    v-col( md="7")
-      div.rightblock
+    v-col()
+      div.rightblock(v-if="backetProduts.length")
         div.paymentsBlock
           span.title Покупки
           div.mainInfo
-            div(v-for="(el, index) in allProducts")
-              div(v-if="index < 3" style="display:flex")
+            div(v-for="(el, index) in backetProduts")
+              div(style="display: flex; justify-content: space-between; align-items: center;")
                 v-col(md="10")
                   v-img(width="20%" height="auto" :src="el.img")
                 v-col(md="5" style="margin-left: -20vw")
                   span {{el.name}}
+                
+                v-col( @click="removeQuantity(el)")
+                  v-btn(fab plain x-small)
+                    v-icon mdi-minus
+
+                v-col
+                  span.head {{el.quantity}}
+                
+                v-col
+                  v-btn(fab plain x-small @click="addQuantity(el)")
+                    v-icon mdi-plus
+                
                 v-col(md="2" style="padding-left:10px")
-                  span.head 1 шт.
-                v-col(md="2" style="padding-left:10px")
-                  span {{el.price}}
+                  span {{productPrice(el)}}
         
         hr
-        br
-        
+
         div.check
           div.checkitem
             span.head Кол-во товаров
-            span.head(style="margin-left: -25vw;") 3
-          
-          br
-          
+            span.head(style="margin-left: -25vw;") {{backetProduts.length}}
+
           div.checkitem
             span.head Сумма заказа
-            span.head 109 997 ₽
-          
-          br
+            span.head {{productsSumm}} ₽
           
           div.checkitem
             span.head Стоимость доставки
             span.head Бесплатно
-          
-          br
 
           div.checkitem
             span.content ИТОГО
-            span.content 109 997 ₽
-          
-          br
+            span.content {{productsSumm}} ₽
 
           div.checkitem
-            v-btn.white--text(color="green" blcok style="width:100%") Перейти к оформлению
+            v-btn.white--text(color="green" blcok @click="" :disabled="backetProduts.length == 0" style="width:100%") Перейти к оформлению
+      div.empty(v-else)
+        div Корзина пуста
+        div Воспользуйтесь поиском, чтобы найти всё, что нужно.
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex'
 export default {
   name:"Basket",
   data: () => ({
-    allProducts: null
   }),
 
-  beforeMount(){
-    this.allProducts = JSON.parse (localStorage.getItem('allProducts'))
-  }
+  computed: {
+    ...mapState('market', ['backetProduts']),
+
+    breadcrumbs() {
+      let pages = [
+        {
+          text: 'Главная',
+          disabled: false,
+          href: '/'
+        },
+        {
+          text: 'Корзина',
+          disabled: true,
+          href: '/basket'
+        }
+      ]
+      return pages
+    },
+
+    productsSumm() {
+      let summ = 0
+      if(!this.backetProduts) {
+        return 0
+      }
+      this.backetProduts.map(el => {
+        summ += Number(el.price.replaceAll(' ', '').replace('₽', '') * el.quantity)
+      })
+      return summ.toLocaleString('en-US').replace(/,/g, ' ') + ' ₽'
+    }
+  },
+
+  methods: {
+    ...mapMutations('market', ['addProductQuantity', 'turnDownProductQuantity']),
+
+    addQuantity(el) {
+      this.addProductQuantity(el)
+    },
+
+    removeQuantity(el) {
+      this.turnDownProductQuantity(el)
+    },
+
+    productPrice(el) {
+      return (el.price.replaceAll(' ', '').replace('₽', '') * el.quantity).toLocaleString('en-US').replace(/,/g, ' ') + ' ₽'
+    }
+  },
 
 }
 </script>
@@ -95,6 +146,7 @@ export default {
   background: #fff;
   padding: 30px;
   border-radius: 10px;
+  box-shadow: 0 0 10px #c4c4c4;
 }
 .title{
   color:#10103a
@@ -130,10 +182,19 @@ export default {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 .checkitem{
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
 }
 .rightblock{
+  width: 100%;
   max-width: 35vw;
+}
+.empty {
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>
