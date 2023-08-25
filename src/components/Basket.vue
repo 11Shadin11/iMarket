@@ -4,7 +4,7 @@ div
     v-col
       v-breadcrumbs( :items="breadcrumbs" large)
   div.bac-grey
-    v-col( md="6")
+    v-col( md="5")
       div.leftBlock
         div.deliveryBlock
           span.title Ближайшая доставка
@@ -34,11 +34,12 @@ div
           span.title Покупки
           div.mainInfo
             div(v-for="(el, index) in backetProduts")
-              div(style="display: flex; justify-content: space-between; align-items: center;")
+              .backet-produt-card
                 v-col(md="10")
-                  v-img(width="20%" height="auto" :src="el.img")
-                v-col(md="5" style="margin-left: -20vw")
+                  v-img( width="25%" :src="require(`@/assets/${el.img}`)")
+                v-col(md="5" style="margin-left: -20vw; display: flex; flex-direction: column")
                   span {{el.name}}
+                  span {{productPrice(el)}}
                 
                 v-col( @click="removeQuantity(el)")
                   v-btn(fab plain x-small)
@@ -51,10 +52,16 @@ div
                   v-btn(fab plain x-small @click="addQuantity(el)")
                     v-icon mdi-plus
                 
-                v-col(md="2" style="padding-left:10px")
-                  span {{productPrice(el)}}
-        
-        hr
+                v-col(md="2")
+                  div  
+                    v-btn(plain v-if="checkFavorite(el)" @click="addToFavorites(el)")
+                      v-icon(color="red") mdi-heart
+                    
+                    v-btn(plain v-else @click="addToFavorites(el)")
+                      v-icon mdi-heart-outline
+                  
+                  v-btn(plain @click="deleteProduct(el)")
+                    v-icon mdi-delete
 
         div.check
           div.checkitem
@@ -88,7 +95,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('market', ['backetProduts']),
+    ...mapState('market', ['backetProduts', 'favoritProducts']),
 
     breadcrumbs() {
       let pages = [
@@ -119,7 +126,15 @@ export default {
   },
 
   methods: {
-    ...mapMutations('market', ['addProductQuantity', 'turnDownProductQuantity']),
+    ...mapMutations('market', ['addProductQuantity', 'turnDownProductQuantity', 'setProductInFavorits', 'remove']),
+    
+    checkFavorite(el) {
+      if(this.favoritProducts.length) {
+        const id = this.favoritProducts.map(el => el.id)
+        return id.includes(el.id)
+      }
+      return false
+    },
 
     addQuantity(el) {
       this.addProductQuantity(el)
@@ -131,6 +146,14 @@ export default {
 
     productPrice(el) {
       return (el.price.replaceAll(' ', '').replace('₽', '') * el.quantity).toLocaleString('en-US').replace(/,/g, ' ') + ' ₽'
+    },
+
+    addToFavorites(el) {
+      this.setProductInFavorits(el)
+    },
+
+    deleteProduct(el) {
+      this.remove(el)
     }
   },
 
@@ -196,5 +219,14 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.backet-produt-card {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  /* border-top: .5px solid #434343; */
+  border-bottom: .5px solid #434343;
+  padding: 10px 0;
+  margin: 10px 0;
 }
 </style>

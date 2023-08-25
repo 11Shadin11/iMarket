@@ -15,7 +15,7 @@ div
       v-row.mx-2.mb-3
         v-col( v-for="item in product" :key="item.id" md="4")
           v-card.product-card(@click="openProductPage(item)")
-            v-img.product-card-image(:src="item.img")
+            v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
             div
               span.item-name {{ item.name }}
             div
@@ -27,15 +27,18 @@ div
               span.item-name(style="color:#fc8507") {{item.price}}
             div.backet-button-block
               v-btn.backet-button( v-if="!checkProdutInBacket(item.id)" color="primary" elevation="10" @click.stop="addToBacket(item)") Добавить в корзину
-              v-btn.backet-button( v-else color="red" elevation="10" @click.stop="goToBacket") В корзине
+              v-btn.backet-button( v-else color="primary" elevation="10" @click.stop="goToBacket") В корзине
                 v-icon mdi-basket-check
-  div(v-else)
-    div(v-if="findedProducts.length")
-      span Мы нашли {{findedProducts.length}} товара по вашем запросу.
-      v-row.mx-2.mb-3
+              v-btn.backet-button(color="green") Купить
+              v-btn.backet-button(plain)
+                v-icon mdi-heart-outline
+  //- div(v-else)
+    .search-block(v-if="findedProducts.length")
+      span Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
+      v-row.mx-2.mb-3(style="display: flex; justify-content: center;")
         v-col( v-for="item in findedProducts" :key="item.id" md="4")
           v-card.product-card(@click="openProductPage(item)")
-            v-img.product-card-image(:src="item.img")
+            v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
             div
               span.item-name {{ item.name }}
             div
@@ -49,16 +52,17 @@ div
               v-btn.backet-button( v-if="!checkProdutInBacket(item.id)" color="primary" elevation="10" @click.stop="addToBacket(item)") Добавить в корзину
               v-btn.backet-button( v-else color="red" elevation="10" @click.stop="goToBacket") В корзине
                 v-icon mdi-basket-check
-    div(v-else)
+    .search-block(v-else)
       span По вашему запросу товаров сейчас нет.
 </template>
 
 <script>
 import Banner from './Banner'
 import { mapMutations, mapState } from 'vuex'
+import products from "@/store/products.json"
 
 export default {
-  name: 'Cafe',
+  name: 'MainPage',
   
   components:{
     Banner
@@ -66,6 +70,10 @@ export default {
   
   data: () => ({
   }),
+
+  mounted() {
+    console.log(products);
+  },
 
   computed: {
     ...mapState('market', ['product', 'categories', 'backetProduts', 'searchBlockFlag', 'findedProducts'])
@@ -139,10 +147,14 @@ export default {
   flex-wrap: wrap;
 }
 .backet-button-block {
-  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: max-content;
 }
 .backet-button {
-  width: inherit;
+  margin: 0 10px;
 }
 .product-card {
   display: flex;
@@ -150,5 +162,15 @@ export default {
 }
 .product-card-image {
   transform: scale(0.8);
+}
+.search-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.search-block span {
+  padding: 20px 0;
+  font-size: 20px;
 }
 </style>

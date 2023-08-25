@@ -7,7 +7,7 @@
     v-row
       v-col( md="5")
         v-card( style="padding:20px")
-          v-img.d-flex.align-end( :src="selectedProduct.img")
+          v-img.d-flex.align-end( :src="require(`@/assets/${selectedProduct.img}`)")
 
       v-col( md="7")
         v-card.h-100
@@ -17,7 +17,7 @@
             v-divider
             p.mt-4.text-body-2.mr-5 {{selectedProduct.description}}
 
-    v-row.cafe__menu
+    //- v-row.device__menu
       v-col.order-sm-2.order-xl-1(md="6")
         v-card.h-100
           v-card-text
@@ -39,14 +39,14 @@
           //-   class="d-flex align-end"
           //- )
           
-    Comment
+    //- Comment
 </template>
 
 <script>
 import Comment from './Comment.vue';
 
 export default {
-  name: 'CafeView',
+  name: 'DeviceView',
   components: {
     Comment,
   },
@@ -65,7 +65,7 @@ export default {
         {
           text: this.selectedProduct.name,
           disabled: true,
-          href: '/cafe/view'
+          href: '/view'
         }
       ]
       return pages

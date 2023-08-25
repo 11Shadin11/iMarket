@@ -1,11 +1,11 @@
 <template lang="pug">
   v-app#app
     .loading-screen(v-if="timeout")
-      v-progress-circular( indeterminate size="200" width="5" color="#00001f")
-      .welcome-text Welcom to Imarket®
+      v-progress-circular( indeterminate size="200" width="10" color="#00001f")
+      //- .welcome-text Welcom to Imarket®
     Header
 
-    v-main
+    v-main.asd
       v-container( class="pt-5")
         router-view( class="view")
 
@@ -31,7 +31,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.timeout = !this.timeout
-    }, 5000);
+    }, 1500);
   }
 };
 </script>
@@ -77,7 +77,7 @@ export default {
   backdrop-filter: blur(20px);
 }
 .welcome-text {
-  color: rgb(255, 102, 0);
+  color: rgb(0, 0, 0);
   position: absolute;
   font-size: 20px;
   font-family: 'Roboto';

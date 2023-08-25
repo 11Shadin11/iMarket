@@ -23,6 +23,7 @@
         
         div.px-20
           v-icon( color="#fff") mdi-heart-outline
+          .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
 
         //- div.imgBox.px-20
           img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
@@ -38,11 +39,12 @@ export default {
   }),
 
   computed: {
-    ...mapState('market', ['backetProduts', 'product']),
+    ...mapState('market', ['backetProduts', 'product', 'favoritProducts']),
 
     checkNewProduct() {
       return this.backetProduts.length
     },
+
   },
 
   methods: {
@@ -54,7 +56,6 @@ export default {
       if (text.length) {
         this.setSearchBlockFlag(true)
         let findedItems = this.product.filter(el => el.name.toLowerCase().includes(text))
-        console.log(findedItems);
         this.setFindedProducts(findedItems)
       }
 

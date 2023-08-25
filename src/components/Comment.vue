@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'CafeComment',
+  name: 'DeviceComment',
   methods: {
     sendForm() {
       this.$refs.form.validate()
