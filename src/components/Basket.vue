@@ -53,12 +53,7 @@ div
                     v-icon mdi-plus
                 
                 v-col(md="2")
-                  div  
-                    v-btn(plain v-if="checkFavorite(el)" @click="addToFavorites(el)")
-                      v-icon(color="red") mdi-heart
-                    
-                    v-btn(plain v-else @click="addToFavorites(el)")
-                      v-icon mdi-heart-outline
+                  FavoriteButton(:selectedProduct="el")
                   
                   v-btn(plain @click="deleteProduct(el)")
                     v-icon mdi-delete
@@ -88,9 +83,17 @@ div
 </template>
 
 <script>
+
 import { mapMutations, mapState } from 'vuex'
+import FavoriteButton from './FavoriteButton.vue'
+
 export default {
   name:"Basket",
+
+  components: {
+    FavoriteButton
+  },
+
   data: () => ({
   }),
 
@@ -128,13 +131,7 @@ export default {
   methods: {
     ...mapMutations('market', ['addProductQuantity', 'turnDownProductQuantity', 'setProductInFavorits', 'remove']),
     
-    checkFavorite(el) {
-      if(this.favoritProducts.length) {
-        const id = this.favoritProducts.map(el => el.id)
-        return id.includes(el.id)
-      }
-      return false
-    },
+    
 
     addQuantity(el) {
       this.addProductQuantity(el)
@@ -146,10 +143,6 @@ export default {
 
     productPrice(el) {
       return (el.price.replaceAll(' ', '').replace('₽', '') * el.quantity).toLocaleString('en-US').replace(/,/g, ' ') + ' ₽'
-    },
-
-    addToFavorites(el) {
-      this.setProductInFavorits(el)
     },
 
     deleteProduct(el) {

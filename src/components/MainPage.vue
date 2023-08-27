@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   div(v-if="!searchBlockFlag")
-    div
+    //- div
       banner
       h1 Популярные категории ⭐
       
@@ -13,7 +13,7 @@ div
     div
       h1.text-h4.py-5 Горячие скидки 🔥
       v-row.mx-2.mb-3
-        v-col( v-for="item in product" :key="item.id" md="4")
+        v-col( v-for="item in product" :key="item.id" md="3")
           v-card.product-card(@click="openProductPage(item)")
             v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
             div
@@ -26,12 +26,14 @@ div
             v-card-title
               span.item-name(style="color:#fc8507") {{item.price}}
             div.backet-button-block
-              v-btn.backet-button( v-if="!checkProdutInBacket(item.id)" color="primary" elevation="10" @click.stop="addToBacket(item)") Добавить в корзину
-              v-btn.backet-button( v-else color="primary" elevation="10" @click.stop="goToBacket") В корзине
-                v-icon mdi-basket-check
+              div
+                v-btn.backet-button( v-if="!checkProdutInBacket(item.id)" color="primary" elevation="10" @click.stop="addToBacket(item)") Добавить в корзину
+                v-btn.backet-button( v-else color="primary" elevation="10" @click.stop="goToBacket") В корзине
+                  v-icon mdi-basket-check
+              
               v-btn.backet-button(color="green") Купить
-              v-btn.backet-button(plain)
-                v-icon mdi-heart-outline
+              
+              FavoriteButton(:selectedProduct="item")
   //- div(v-else)
     .search-block(v-if="findedProducts.length")
       span Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
@@ -57,22 +59,25 @@ div
 </template>
 
 <script>
-import Banner from './Banner'
 import { mapMutations, mapState } from 'vuex'
-import products from "@/store/products.json"
+import Banner from './Banner.vue'
+import FavoriteButton from './FavoriteButton.vue'
+
+// import products from "@/store/products.json"
 
 export default {
   name: 'MainPage',
   
   components:{
-    Banner
+    Banner,
+    FavoriteButton
   },
   
   data: () => ({
   }),
 
   mounted() {
-    console.log(products);
+    // console.log(products);
   },
 
   computed: {
@@ -80,7 +85,7 @@ export default {
   },
 
   methods:{
-    ...mapMutations('market', ['setProductInBasket']),
+    ...mapMutations('market', ['setProductInBasket', 'setProductInFavorits']),
 
     checkProdutInBacket(itemId) {
       if(this.backetProduts.length) {
@@ -101,11 +106,20 @@ export default {
 
     goToBacket() {
       this.$router.push({path:'/basket'})
+    },
+
+    addToFavorites(el) {
+      this.setProductInFavorits(el)
     }
   }
 }
 </script>
 <style scoped>
+@media (hover:hover) {
+  .v-card:hover{
+    box-shadow: 0 0 10px #000;
+  }
+}
 .v-card{
   padding: 20px !important;
   height: 100%;
@@ -118,9 +132,6 @@ export default {
   justify-content: center;
   align-items: center;
   transition: box-shadow .5s;
-}
-.v-card:hover{
-  box-shadow: 0 0 10px #000;
 }
 .item-name{
   word-break: break-word;
@@ -145,13 +156,15 @@ export default {
 .categoriesList {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 .backet-button-block {
-  padding: 10px 0;
+  flex-wrap: wrap;
+  gap: 10px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: max-content;
+  margin-top: 20px;
+  justify-content: center;
 }
 .backet-button {
   margin: 0 10px;
@@ -161,7 +174,8 @@ export default {
   flex-direction: column;
 }
 .product-card-image {
-  transform: scale(0.8);
+  width: 60%;
+  height: auto;
 }
 .search-block {
   display: flex;

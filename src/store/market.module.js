@@ -43,16 +43,14 @@ export default {
     },
 
     setProductInFavorits(state, product) {
-      if(state.favoritProducts.length) {
-        let elIdx = state.backetProduts.findIndex(e => product.id === e.id)
-        if(elIdx) state.favoritProducts.push(product)
-        else state.favoritProducts.splice(elIdx, 1,)
-      }
+      let elIdx = state.favoritProducts.findIndex(e => product.id === e.id)
+      if(elIdx == -1) state.favoritProducts.push(product)
+      else state.favoritProducts.splice(elIdx, 1);
     },
 
     remove(state, el) {
       let elIdx = state.backetProduts.findIndex(e => el.id === e.id)
-      state.backetProduts.splice(elIdx, 1,)
+      state.backetProduts.splice(elIdx, 1)
     }
   }
 

@@ -78,7 +78,6 @@ export default {
 
   mounted(){
     document.querySelector('.deviceView').scrollTop = 0
-    console.log(this.selectedProduct);
   }
 }
 </script>

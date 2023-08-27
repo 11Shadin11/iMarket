@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.header
+  div
     v-app-bar( color="#00001f" app)
       div.font-weight-bold.white--text.d-flex
         v-app-bar-title.d-flex.align-center iMarket
@@ -69,8 +69,8 @@ export default {
 </script>
 <style scoped>
 header {
-  margin: 10px !important;
-  border-radius: 20px !important;
+  /* margin: 10px !important; */
+  border-radius: 0 0 30px 30px !important;
 }
 form {
   position: relative;
@@ -120,11 +120,5 @@ img{
   top: 40px;
   font-size: 10px;
   font-family: fantasy;
-}
-.logo {
-  fill: darkgreen !important;
-  background: #eeeeee;
-  width: 100%;
-  border-radius: 100%;
 }
 </style>
