@@ -1,10 +1,10 @@
 <template lang="pug">
-  div  
-    v-btn(plain v-if="checkFavorite(selectedProduct)" @click.stop="addToFavorites(selectedProduct)")
-      v-icon(color="red") mdi-heart
-    
-    v-btn(plain v-else @click.stop="addToFavorites(selectedProduct)")
-      v-icon mdi-heart-outline
+div  
+  v-btn(plain v-if="checkFavorite(selectedProduct)" @click.stop="addToFavorites(selectedProduct)")
+    v-icon(color="red") mdi-heart
+  
+  v-btn(plain v-else @click.stop="addToFavorites(selectedProduct)")
+    v-icon mdi-heart-outline
 </template>
 
 <script>

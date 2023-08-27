@@ -85,7 +85,7 @@ div
 <script>
 
 import { mapMutations, mapState } from 'vuex'
-import FavoriteButton from './FavoriteButton.vue'
+import FavoriteButton from '../components/FavoriteButton.vue'
 
 export default {
   name:"Basket",

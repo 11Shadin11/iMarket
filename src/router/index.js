@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainPage from '../components/MainPage.vue'
-import DeviceView from '../components/DeviceView.vue'
-import Basket from '../components/Basket.vue'
+import MainPage from '../views/MainPage.vue'
+import DeviceView from '../views/DeviceView.vue'
+import Basket from '../views/Basket.vue'
 
 Vue.use(VueRouter)
 

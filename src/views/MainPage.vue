@@ -1,19 +1,20 @@
 <template lang="pug">
 div
-  div(v-if="!searchBlockFlag")
-    //- div
+  div
+    div(v-show="!searchBlockFlag")
       banner
       h1 Популярные категории ⭐
       
-    div.categoriesList
+    div.categoriesList(v-show="!searchBlockFlag")
       div( v-for="el in categories" md="4")
         div.icon-categories
           v-icon(color="#2d2d2d") {{el.mdi}}
 
     div
-      h1.text-h4.py-5 Горячие скидки 🔥
-      v-row.mx-2.mb-3
-        v-col( v-for="item in product" :key="item.id" md="3")
+      h1.text-h4.py-5(v-show="!searchBlockFlag") Горячие скидки 🔥
+      .searched-product-length(v-show="searchBlockFlag") Мы нашли {{returnProduct.length}} товар(а) по вашем запросу.
+      v-row.mx-2.mb-3(:class="{'search-block' : searchBlockFlag }")
+        v-col( v-for="item in returnProduct" :key="item.id" md="4")
           v-card.product-card(@click="openProductPage(item)")
             v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
             div
@@ -60,8 +61,8 @@ div
 
 <script>
 import { mapMutations, mapState } from 'vuex'
-import Banner from './Banner.vue'
-import FavoriteButton from './FavoriteButton.vue'
+import Banner from '../components/Banner.vue'
+import FavoriteButton from '../components/FavoriteButton.vue'
 
 // import products from "@/store/products.json"
 
@@ -81,7 +82,12 @@ export default {
   },
 
   computed: {
-    ...mapState('market', ['product', 'categories', 'backetProduts', 'searchBlockFlag', 'findedProducts'])
+    ...mapState('market', ['product', 'categories', 'backetProduts', 'searchBlockFlag', 'findedProducts']),
+
+    returnProduct() {
+      if(this.searchBlockFlag) return this.findedProducts
+      return this.product
+    }
   },
 
   methods:{
@@ -177,13 +183,7 @@ export default {
   width: 60%;
   height: auto;
 }
-.search-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.search-block span {
+.searched-product-length {
   padding: 20px 0;
   font-size: 20px;
 }

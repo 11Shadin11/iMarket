@@ -1,15 +1,15 @@
 <template lang="pug">
-  v-app#app
-    .loading-screen(v-if="timeout")
-      v-progress-circular( indeterminate size="200" width="10" color="#00001f")
-      //- .welcome-text Welcom to Imarket®
-    Header
+v-app(id="app")
+  //- .loading-screen(v-if="timeout")
+    v-progress-circular( indeterminate size="200" width="10" color="#00001f")
+    //- .welcome-text Welcom to Imarket®
+  Header
 
-    v-main.asd
-      v-container( class="pt-5")
-        router-view( class="view")
+  v-main
+    v-container( class="pt-5")
+      router-view( class="view")
 
-    Footer
+  Footer
 </template>
 
 <script>
@@ -25,13 +25,13 @@ export default {
   },
 
   data: () => ({
-    timeout: true,
+    // timeout: true,
   }),
 
   mounted() {
-    setTimeout(() => {
-      this.timeout = !this.timeout
-    }, 1500);
+    // setTimeout(() => {
+    //   this.timeout = !this.timeout
+    // }, 1500);
   }
 };
 </script>

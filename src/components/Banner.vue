@@ -1,14 +1,14 @@
 <template lang="pug">
-  div.banner-container
-    div.main-block-deposit
-      div.text-part
-        span.bannerText(style="color:white; margin-right:10px; font-size:50px") Black Friday
-        br
-        span.bannerText(style="color:white;") ГЛАВНЫЕ СКИДКИ ГОДА
-        br
-        span(style="color:white;") Только до 32 мая 2023 года.
-        div.close
-          img.bannerImage( width="30%" height="auto" src="@/assets/fromBanner.png")
+div.banner-container
+  div.main-block-deposit
+    div.text-part
+      span.bannerText(style="color:white; margin-right:10px; font-size:50px") Black Friday
+      br
+      span.bannerText(style="color:white;") ГЛАВНЫЕ СКИДКИ ГОДА
+      br
+      span(style="color:white;") Только до 32 мая 2023 года.
+      div.close
+        img.bannerImage( width="25%" height="auto" src="@/assets/fromBanner.png")
 </template>
 <script>
 export default {

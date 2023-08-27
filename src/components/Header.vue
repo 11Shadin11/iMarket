@@ -1,32 +1,32 @@
 <template lang="pug">
-  div
-    v-app-bar( color="#00001f" app)
-      div.font-weight-bold.white--text.d-flex
-        v-app-bar-title.d-flex.align-center iMarket
+div
+  v-app-bar( color="#00001f" app)
+    div.font-weight-bold.white--text.d-flex
+      v-app-bar-title.d-flex.align-center iMarket
+    
+    div.headeMenu
+      div(style="padding-left:25vw")
+        div.d1
+          input( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
       
-      div.headeMenu
-        div(style="padding-left:25vw")
-          div.d1
-            input( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
-        
-        div( style="padding-left:20px")
-          v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
-            v-icon( color="#fff") mdi-home
+      div( style="padding-left:20px")
+        v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
+          v-icon( color="#fff") mdi-home
 
-        div.backet( style="padding-left:23vw")
-          v-btn( color="#e9712b" fab small @click="$router.push({path:'/basket'})")
-            v-icon( color="#fff") mdi-basket-fill
-          .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
-                  
-        div.px-20
-          v-icon( color="#fff") mdi-bell-outline
-        
-        div.px-20
-          v-icon( color="#fff") mdi-heart-outline
-          .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
+      div.backet( style="padding-left:23vw")
+        v-btn( color="#e9712b" fab small @click="$router.push({path:'/basket'})")
+          v-icon( color="#fff") mdi-basket-fill
+        .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
+                
+      div.px-20
+        v-icon( color="#fff") mdi-bell-outline
+      
+      div.px-20
+        v-icon( color="#fff") mdi-heart-outline
+        .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
 
-        //- div.imgBox.px-20
-          img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
+      //- div.imgBox.px-20
+        img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
 </template>
 
 <script>
