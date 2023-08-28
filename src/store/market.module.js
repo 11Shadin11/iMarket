@@ -8,6 +8,8 @@ export default {
 
     categories: products.categories,
 
+    selectedProduct: null,
+
     backetProduts: [],
 
     searchBlockFlag: false,
@@ -17,9 +19,18 @@ export default {
     favoritProducts: []
   },
 
-  getters: {},
+  getters: {
+    deviceWidth() {
+      return window.innerWidth < 1000
+    }
+  },
 
   mutations:{
+
+    setSelectedProduct(state, selectedProduct) {
+      state.selectedProduct = selectedProduct
+    },
+    
     setProductInBasket(state, product) {
       state.backetProduts.push(product)
     },

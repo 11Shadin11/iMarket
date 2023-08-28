@@ -4,7 +4,7 @@ div
     v-col
       v-breadcrumbs( :items="breadcrumbs" large)
   div.bac-grey
-    v-col( md="5")
+    //- v-col()
       div.leftBlock
         div.deliveryBlock
           span.title Ближайшая доставка
@@ -28,7 +28,7 @@ div
                   v-btn(color="warning" fab dark)
                     v-icon mdi-account-circle
                   span(style="padding-left:10px") Иванов Иван  
-    v-col()
+    v-col(md="10")
       div.rightblock(v-if="backetProduts.length")
         div.paymentsBlock
           span.title Покупки
@@ -110,7 +110,7 @@ export default {
         {
           text: 'Корзина',
           disabled: true,
-          href: '/basket'
+          href: 'basket'
         }
       ]
       return pages

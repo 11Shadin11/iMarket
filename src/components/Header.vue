@@ -2,26 +2,29 @@
 div
   v-app-bar( color="#00001f" app)
     div.font-weight-bold.white--text.d-flex
+      v-app-bar-nav-icon
+        v-icon(color="red") mdi-cart-heart
       v-app-bar-title.d-flex.align-center iMarket
     
-    div.headeMenu
-      div(style="padding-left:25vw")
+    div.headeMenu(:class="{'fullWidth': deviceWidth}")
+      div(style="padding-left:10vw")
         div.d1
           input( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
+          v-icon( color="#fff") mdi-shopping-search
       
-      div( style="padding-left:20px")
+      div( v-if="!deviceWidth")
         v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
-          v-icon( color="#fff") mdi-home
+          v-icon( color="#fff") mdi-store
 
-      div.backet( style="padding-left:23vw")
+      div.backet( v-if="!deviceWidth")
         v-btn( color="#e9712b" fab small @click="$router.push({path:'/basket'})")
           v-icon( color="#fff") mdi-basket-fill
         .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
                 
-      div.px-20
+      div.px-20(v-if="!deviceWidth")
         v-icon( color="#fff") mdi-bell-outline
       
-      div.px-20
+      div.px-20(v-if="!deviceWidth")
         v-icon( color="#fff") mdi-heart-outline
         .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
 
@@ -30,7 +33,7 @@ div
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapGetters, mapState } from 'vuex'
 export default {
   name: 'Header',
   data: () => ({
@@ -40,6 +43,8 @@ export default {
 
   computed: {
     ...mapState('market', ['backetProduts', 'product', 'favoritProducts']),
+    ...mapGetters('market', ['deviceWidth']),
+
 
     checkNewProduct() {
       return this.backetProduts.length
@@ -69,8 +74,8 @@ export default {
 </script>
 <style scoped>
 header {
-  /* margin: 10px !important; */
   border-radius: 0 0 30px 30px !important;
+  z-index: 101 !important;
 }
 form {
   position: relative;
@@ -96,6 +101,7 @@ form {
   padding-left: 60px;
 }
 .headeMenu{
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -120,5 +126,8 @@ img{
   top: 40px;
   font-size: 10px;
   font-family: fantasy;
+}
+.fullWidth {
+  width: 70%;
 }
 </style>

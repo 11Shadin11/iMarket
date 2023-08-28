@@ -11,50 +11,32 @@ div.deviceView
 
     v-col( md="7")
       v-card.h-100
-
         v-card-text
           h4.text-h5.mb-4(style="color:#000") {{selectedProduct.name}}
-          v-divider
-          p.mt-4.text-body-2.mr-5 {{selectedProduct.description}}
-
-  //- v-row.device__menu
-    v-col.order-sm-2.order-xl-1(md="6")
-      v-card.h-100
+        v-divider
         v-card-text
-          v-list-item-group
-            div.characterics
-              h4.text-h5.mb-4( style="color:#000") Характеристики:
-            //- v-img( src="../assets/aboutProduct.png")
-
-    v-col.order-sm-1.order-xl-2(md="6")
-      v-card
-        v-card-text
-          v-list-item-group
-            div.characterics
-              h4.text-h5.mb-4( style="color:#000") Отзывы:
-        //- v-img(
-        //-   width="80%"
-        //-   height="auto"
-        //-   src="../assets/video.png"
-        //-   class="d-flex align-end"
-        //- )
-        
-  //- Comment
+          h5.mt-4.text-body-2.mr-5 {{selectedProduct.description}}
+        v-card-actions
+          BasketButtons(:selectedProduct="selectedProduct")
 </template>
 
 <script>
-import Comment from '../components/Comment.vue';
+import { mapState } from 'vuex';
+import BasketButtons from '@/components/BasketButtons.vue';
+// import Comment from '../components/Comment.vue';
 
 export default {
   name: 'DeviceView',
   components: {
-    Comment,
+    BasketButtons
+    // Comment,
   },
   data: () => ({
-    selectedProduct: null
   }),
 
   computed:{
+    ...mapState('market', ['selectedProduct']),
+
     breadcrumbs() {
       let pages = [
         {
@@ -73,7 +55,9 @@ export default {
   },
 
   beforeMount(){
-    this.selectedProduct = JSON.parse (localStorage.getItem('selectedProducts'))
+    // if(!this.selectedProduct) {
+    //   this.$router.push({path:'/'})
+    // }
   },
 
   mounted(){

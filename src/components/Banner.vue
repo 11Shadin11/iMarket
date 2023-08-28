@@ -7,7 +7,7 @@ div.banner-container
       span.bannerText(style="color:white;") ГЛАВНЫЕ СКИДКИ ГОДА
       br
       span(style="color:white;") Только до 32 мая 2023 года.
-      div.close
+      //- div.close
         img.bannerImage( width="25%" height="auto" src="@/assets/fromBanner.png")
 </template>
 <script>

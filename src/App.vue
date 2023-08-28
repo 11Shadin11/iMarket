@@ -1,32 +1,47 @@
 <template lang="pug">
 v-app(id="app")
+  Header
+  
   //- .loading-screen(v-if="timeout")
     v-progress-circular( indeterminate size="200" width="10" color="#00001f")
     //- .welcome-text Welcom to Imarket®
-  Header
 
-  v-main
+  v-main(v-show="!searchBlockFlag")
     v-container( class="pt-5")
       router-view( class="view")
-
+  
+  SearchPage(v-show="searchBlockFlag")
+  
   Footer
+  MobileFooterMenu(v-if="deviceWidth")
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import MobileFooterMenu from './components/MobileFooterMenu.vue';
 
+import SearchPage from './views/SearchPage.vue';
+
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: 'App',
 
   components: {
     Header,
     Footer,
+    MobileFooterMenu,
+    SearchPage
   },
 
   data: () => ({
     // timeout: true,
   }),
+
+  computed: {
+    ...mapState('market', ['searchBlockFlag']),
+    ...mapGetters('market', ['deviceWidth'])
+  },  
 
   mounted() {
     // setTimeout(() => {
@@ -74,7 +89,7 @@ export default {
   height: 100vh;
   width: 100vw;
   background: transparent;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
 }
 .welcome-text {
   color: rgb(0, 0, 0);
