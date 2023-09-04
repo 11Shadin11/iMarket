@@ -1,5 +1,5 @@
 <template lang="pug">
-div.paymentsBlock
+v-col(md="10").paymentsBlock
   span.title(v-if="favoritProducts.length") Избранные товары
   span.title(v-else) Избранных товаров нет. Воспользуйтесь поиском, чтобы найти всё, что нужно.
   div.mainInfo

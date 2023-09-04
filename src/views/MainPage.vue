@@ -2,7 +2,7 @@
 div
   div
     div
-      banner
+      banner(v-if="!deviceWidth")
       h2 Популярные категории ⭐
       
     div.categoriesList
@@ -31,7 +31,7 @@ div
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 import Banner from '../components/Banner.vue'
 import BasketButtons from '@/components/BasketButtons.vue'
 
@@ -51,6 +51,7 @@ export default {
 
   computed: {
     ...mapState('market', ['product', 'categories', 'backetProduts']),
+    ...mapGetters('market', ['deviceWidth'])
   },
 
   methods:{

@@ -21,10 +21,10 @@ div
           v-icon( color="#fff") mdi-basket-fill
         .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
                 
-      div.px-20(v-if="!deviceWidth")
+      div.px-20(v-if="!deviceWidth" style="cursor:pointer")
         v-icon( color="#fff") mdi-bell-outline
       
-      div.px-20(v-if="!deviceWidth")
+      div.px-20(v-if="!deviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
         v-icon( color="#fff") mdi-heart-outline
         .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
 
@@ -103,7 +103,7 @@ form {
 .headeMenu{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
 }
 img{
