@@ -6,25 +6,25 @@ div
         v-icon(color="red") mdi-cart-heart
       v-app-bar-title.d-flex.align-center iMarket
     
-    div.headeMenu(:class="{'fullWidth': deviceWidth}")
+    div.headeMenu(:class="{'fullWidth': checkDeviceWidth}")
       div(style="padding-left:10vw")
         div.d1
           input( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
           v-icon( color="#fff") mdi-shopping-search
       
-      div( v-if="!deviceWidth")
+      div( v-if="!checkDeviceWidth")
         v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
           v-icon( color="#fff") mdi-store
 
-      div.backet( v-if="!deviceWidth")
+      div.backet( v-if="!checkDeviceWidth")
         v-btn( color="#e9712b" fab small @click="$router.push({path:'/basket'})")
           v-icon( color="#fff") mdi-basket-fill
         .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
                 
-      div.px-20(v-if="!deviceWidth" style="cursor:pointer")
+      div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer")
         v-icon( color="#fff") mdi-bell-outline
       
-      div.px-20(v-if="!deviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
+      div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
         v-icon( color="#fff") mdi-heart-outline
         .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
 
@@ -33,7 +33,7 @@ div
 </template>
 
 <script>
-import { mapMutations, mapGetters, mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'Header',
   data: () => ({
@@ -42,13 +42,16 @@ export default {
   }),
 
   computed: {
-    ...mapState('market', ['backetProduts', 'product', 'favoritProducts']),
-    ...mapGetters('market', ['deviceWidth']),
+    ...mapState('market', ['backetProduts', 'product', 'favoritProducts', 'deviceWidth']),
 
 
     checkNewProduct() {
       return this.backetProduts.length
     },
+
+    checkDeviceWidth () {
+      return this.deviceWidth < 1000
+    }
 
   },
 

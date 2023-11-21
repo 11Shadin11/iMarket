@@ -1,10 +1,6 @@
 <template lang="pug">
-v-app(id="app")
+v-app(id="app" )
   Header
-  
-  //- .loading-screen(v-if="timeout")
-    v-progress-circular( indeterminate size="200" width="10" color="#00001f")
-    //- .welcome-text Welcom to Imarket®
 
   v-main(v-show="!searchBlockFlag")
     v-container( class="pt-5")
@@ -13,17 +9,16 @@ v-app(id="app")
   SearchPage(v-show="searchBlockFlag")
   
   Footer
-  MobileFooterMenu(v-if="deviceWidth")
+  MobileFooterMenu(v-if="deviceWidth < 1000")
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import MobileFooterMenu from './components/MobileFooterMenu.vue';
 
 import SearchPage from './views/SearchPage.vue';
-
-import { mapGetters, mapState } from 'vuex';
 export default {
   name: 'App',
 
@@ -31,22 +26,33 @@ export default {
     Header,
     Footer,
     MobileFooterMenu,
-    SearchPage
+    SearchPage,
   },
 
   data: () => ({
-    // timeout: true,
+    timeout: true,
+    width: null
   }),
 
   computed: {
-    ...mapState('market', ['searchBlockFlag']),
-    ...mapGetters('market', ['deviceWidth'])
-  },  
+    ...mapState('market', ['searchBlockFlag', 'deviceWidth']),
+  },
+
+  methods: {
+    ...mapMutations('market', ['setDeviceWidth'])
+  },
+  
+  created() {
+    const onResize = () => this.setDeviceWidth(window.innerWidth)
+    onResize()
+    window.addEventListener('resize', onResize)
+    this.$on('hook:beforeDestroy', () => window.removeEventListener('resize', onResize))
+  },
 
   mounted() {
-    // setTimeout(() => {
-    //   this.timeout = !this.timeout
-    // }, 1500);
+    setTimeout(() => {
+      this.timeout = !this.timeout
+    }, 1500);
   }
 };
 </script>

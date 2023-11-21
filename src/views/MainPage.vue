@@ -2,19 +2,19 @@
 div
   div
     div
-      banner(v-if="!deviceWidth")
+      banner(v-if="!deviceWidth > 1000")
       h2 Популярные категории ⭐
-      
-    div.categoriesList
-      div( v-for="el in categories" md="4")
-        div.icon-categories
-          v-icon(color="#2d2d2d") {{el.mdi}}
+
+    .categoriesList
+      div(v-for="el in categories", md="4")
+        .icon-categories
+          v-icon(color="#2d2d2d") {{ el.mdi }}
 
     div
       h1.text-h4.py-5 Горячие скидки 🔥
-      
+
       v-row.mx-2.mb-3
-        v-col( v-for="item in product" :key="item.id" md="4")
+        v-col(v-for="item in product" :key="item.id" md="4")
           v-card.product-card(@click="openProductPage(item)")
             v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
             div
@@ -23,67 +23,73 @@ div
               p.item-name {{ item.description }}
 
             v-card-text
-              p(style="text-decoration:line-through") {{ item.discount }}
+              p(style="text-decoration: line-through") {{ item.discount }}
             v-card-title
-              span.item-name(style="color:#fc8507") {{item.price}}
-            
+              span.item-name(style="color: #fc8507") {{ item.price }}
+
             BasketButtons(:selectedProduct="item")
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from 'vuex'
-import Banner from '../components/Banner.vue'
-import BasketButtons from '@/components/BasketButtons.vue'
+import { mapMutations, mapState } from "vuex";
+import Banner from "../components/Banner.vue";
+import BasketButtons from "@/components/BasketButtons.vue";
 
 export default {
-  name: 'MainPage',
-  
-  components:{
+  name: "MainPage",
+
+  components: {
     Banner,
-    BasketButtons
+    BasketButtons,
   },
-  
-  data: () => ({
-  }),
+
+  data: () => ({}),
 
   mounted() {
+    window.addEventListener("popstate", function () {
+      // window.location.replace(this.$route.name)
+      this.$router.beforeEach((to, from, next) => {
+        to.name = this.$router.name;
+        from.name = this.$router.name;
+        next({ name: this.$router.name });
+      });
+    });
   },
 
   computed: {
-    ...mapState('market', ['product', 'categories', 'backetProduts']),
-    ...mapGetters('market', ['deviceWidth'])
+    ...mapState("market", ["product", "categories", "backetProduts", "deviceWidth"]),
   },
 
-  methods:{
-    ...mapMutations('market', ['setProductInBasket', 'setProductInFavorits', 'setSelectedProduct']),
+  methods: {
+    ...mapMutations("market", ["setProductInBasket", "setProductInFavorits", "setSelectedProduct"]),
 
     checkProdutInBacket(itemId) {
-      if(this.backetProduts.length) {
-        const id = this.backetProduts.map(el => el.id)
-        return id.includes(itemId)
+      if (this.backetProduts.length) {
+        const id = this.backetProduts.map((el) => el.id);
+        return id.includes(itemId);
       }
-      return false
+      return false;
     },
 
-    openProductPage(item){
-      this.setSelectedProduct(item)
+    openProductPage(item) {
+      this.setSelectedProduct(item);
       // localStorage.setItem('selectedProducts', JSON.stringify(item));
-      this.$router.push({path:'/view'})
+      this.$router.push({ path: "/view" });
     },
 
     addToFavorites(el) {
-      this.setProductInFavorits(el)
-    }
-  }
-}
+      this.setProductInFavorits(el);
+    },
+  },
+};
 </script>
 <style scoped>
-@media (hover:hover) {
-  .v-card:hover{
+@media (hover: hover) {
+  .v-card:hover {
     box-shadow: 0 0 10px #000;
   }
 }
-.v-card{
+.v-card {
   padding: 20px !important;
   height: 100%;
   cursor: pointer;
@@ -94,26 +100,28 @@ export default {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-  transition: box-shadow .5s;
+  transition: box-shadow 0.5s;
 }
-.item-name{
+.item-name {
   word-break: break-word;
 }
-.icon-categories{
-  padding:20px; 
-  margin:10px; 
-  width:60px;
+.icon-categories {
+  padding: 20px;
+  margin: 10px;
+  width: 60px;
   border-radius: 20px;
   background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: box-shadow .5s ;
+  transition: box-shadow 0.5s;
 }
 .icon-categories:hover {
   box-shadow: 0px 0px 10px #000;
 }
-.v-card__subtitle, .v-card__text, .v-card__title {
+.v-card__subtitle,
+.v-card__text,
+.v-card__title {
   padding: 5px !important;
 }
 .categoriesList {

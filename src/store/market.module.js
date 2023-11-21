@@ -16,16 +16,22 @@ export default {
 
     findedProducts: null,
 
+    deviceWidth: 0,
+
     favoritProducts: []
   },
 
   getters: {
-    deviceWidth() {
-      return window.innerWidth < 1000
-    }
+    // deviceWidth() {
+    //   return window.innerWidth < 1000
+    // }
   },
 
   mutations:{
+
+    setDeviceWidth(state, width) {
+      state.deviceWidth = width
+    },
 
     setSelectedProduct(state, selectedProduct) {
       state.selectedProduct = selectedProduct
