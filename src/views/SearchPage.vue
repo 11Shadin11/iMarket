@@ -1,7 +1,7 @@
 <template lang="pug">
 .search-list
-  //- .searched-product-length(v-show=" searchBlockFlag && findedProducts.length ") Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
-  //- .searched-product-length(v-show=" searchBlockFlag && !findedProducts.length ") По вашему запросу товаров сейчас нет.
+  .searched-product-length(v-show=" searchBlockFlag && findedProducts.length ") Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
+  .searched-product-length(v-show=" searchBlockFlag && !findedProducts.length ") По вашему запросу товаров сейчас нет.
   
   
   div( v-for="item in findedProducts" :key="item.id")

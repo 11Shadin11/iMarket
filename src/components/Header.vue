@@ -7,10 +7,10 @@ div
       v-app-bar-title.d-flex.align-center iMarket
     
     div.headeMenu(:class="{'fullWidth': checkDeviceWidth}")
-      div(style="padding-left:10vw")
-        div.d1
-          input( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
-          v-icon( color="#fff") mdi-shopping-search
+      div.d1
+        SearchInput(@input="searchValue")
+        //- input.pl-10( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
+        //- v-icon( color="#fff") mdi-shopping-search
       
       div( v-if="!checkDeviceWidth")
         v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
@@ -27,6 +27,9 @@ div
       div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
         v-icon( color="#fff") mdi-heart-outline
         .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
+      
+      //- div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="")
+        img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
 
       //- div.imgBox.px-20
         img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
@@ -34,8 +37,16 @@ div
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import SearchInput from './SearchInput.vue'
+
 export default {
+  
   name: 'Header',
+
+  components: {
+    SearchInput
+  },
+  
   data: () => ({
     drawer: false,
     group: null,
@@ -77,9 +88,24 @@ export default {
 </script>
 <style scoped>
 header {
-  border-radius: 0 0 30px 30px !important;
+  /* border-radius: 0 0 30px 30px !important; */
   z-index: 101 !important;
+  /* background: linear-gradient(149deg,  rgba(102, 0, 255, 0.74) 0%, rgb(118, 78, 204) 42%,rgb(180, 90, 154) 72%, rgb(191, 51, 51) 100%) !important;
+  animation: gradient .1s infinite linear !important; */
 }
+
+/* @keyframes gradient {
+  0% {
+    border-radius: 0 0 30px 30px !important;
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 30% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+} */
 form {
   position: relative;
   width: 300px;
@@ -132,5 +158,13 @@ img{
 }
 .fullWidth {
   width: 70%;
+}
+.pl-10 {
+  margin-right: 10px ;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

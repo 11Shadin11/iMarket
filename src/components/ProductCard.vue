@@ -1,13 +1,27 @@
 <template lang="pug">
-.product-card(@click="openProductPage(product)")
-  .product-image
-    v-img( width="50%" height="auto" :src="require(`@/assets/${product.img}`)")
-  .product-info
-    span {{ product.name }}
-    span {{ product.description }}
-    p(style="text-decoration:line-through") {{ product.discount }}
-    span(style="color:#fc8507") {{product.price}}
+v-col(md="4")  
+  v-card.product-card(@click="openProductPage(product)")
+    v-img.product-card-image(:src="require(`@/assets/${product.img}`)")
+    div
+      span.item-name {{ product.name }}
+    div
+      p.item-name {{ product.description }}
+
+    v-card-text
+      p(style="text-decoration: line-through") {{ product.discount }}
+    v-card-title
+      span.item-name(style="color: #fc8507") {{ product.price }}
+
     BasketButtons(:selectedProduct="product")
+//- .product-card(@click="openProductPage(product)")
+//-   .product-image
+//-     v-img( width="50%" height="auto" :src="require(`@/assets/${product.img}`)")
+//-   .product-info
+//-     span {{ product.name }}
+//-     span {{ product.description }}
+//-     p(style="text-decoration:line-through") {{ product.discount }}
+//-     span(style="color:#fc8507") {{product.price}}
+//-     BasketButtons(:selectedProduct="product")
 </template>
 
 <script>

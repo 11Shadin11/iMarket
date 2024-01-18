@@ -7,7 +7,8 @@
       "img": "nintendo.webp",
       "discount": "28 800 ₽",
       "price": "25 699 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "gameConsoles"
     },
     {
       "id": 1,
@@ -16,7 +17,8 @@
       "img": "jbl.png",
       "discount": "5 999 ₽",
       "price": "4 299 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "headphones"
     },
     {
       "id": 2,
@@ -25,7 +27,8 @@
       "img": "samsung.webp",
       "discount": "84 499 ₽",
       "price": "79 999 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "cellphone"
     },
     {
       "id": 3,
@@ -34,7 +37,8 @@
       "img": "iphone.jpg",
       "discount": "41 499 ₽",
       "price": "38 499 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "cellphone"
     },
     {
       "id": 4,
@@ -43,7 +47,8 @@
       "img": "miband.png",
       "discount": "3 500 ₽",
       "price": "2 999 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "fitness watch"
     },
 
     {
@@ -53,7 +58,8 @@
       "img": "s22.png",
       "discount": "54 990 ₽",
       "price": "49 990 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "cellphone"
     },
       
     {
@@ -63,7 +69,8 @@
       "img": "zenbook14.png",
       "discount": "89 990 ₽",
       "price": "79 990 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "laptop"
 
     },
     
@@ -74,7 +81,8 @@
       "img": "sony.png",
       "discount": "24 990 ₽",
       "price": "21 490 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "headphones"
 
     },
     
@@ -85,7 +93,8 @@
       "img": "canon.jpg",
       "discount": "49 990 ₽",
       "price": "44 990 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "camera"
 
     },
     
@@ -96,7 +105,8 @@
       "img": "xbox.jpg",
       "discount": "42 990 ₽",
       "price": "39 490 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "gameConsoles"
     },
 
     {
@@ -106,7 +116,8 @@
       "img": "apple.png",
       "discount": "23 990 ₽",
       "price": "21 490 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "watch"
     },
     
     {
@@ -116,7 +127,8 @@
       "img": "xiaomi.png",
       "discount": "27 990 ₽",
       "price": "24 990 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "scooters"
     },
     
     {
@@ -126,7 +138,8 @@
       "img": "delonghi.jpg",
       "discount": "35 990 ₽",
       "price": "31 490 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "Appliances"
     },
     
     {
@@ -136,7 +149,8 @@
       "img": "cuberpunk.jpg",
       "discount": "2 490 ₽",
       "price": "1 990 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "gameConsoles game"
     },
     
     {
@@ -146,7 +160,8 @@
       "img": "jblCharge.png",
       "discount": "9 990 ₽",
       "price": "8 490 ₽",
-      "quantity": 1
+      "quantity": 1,
+      "category" : "bluetooth speaker"
     }
   ],
 

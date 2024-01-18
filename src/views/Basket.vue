@@ -76,13 +76,16 @@ div
             span.content {{productsSumm}} ₽
 
           div.checkitem
-            v-btn.white--text(color="green" blcok @click="" :disabled="backetProduts.length == 0" style="width:100%") Перейти к оформлению
+            v-btn.white--text(color="green" blcok @click="show=true" :disabled="backetProduts.length == 0" style="width:100%") Перейти к оформлению
       div.empty(v-else)
         div Корзина пуста
         div Воспользуйтесь поиском, чтобы найти всё, что нужно.
+  //- v-dialog(v-model="show")
+  //-   card-pay-page
 </template>
 
 <script>
+// import CardPayPage from '@/components/CardPayPage.vue'
 
 import { mapMutations, mapState } from 'vuex'
 import FavoriteButton from '../components/FavoriteButton.vue'
@@ -91,10 +94,12 @@ export default {
   name:"Basket",
 
   components: {
-    FavoriteButton
+    FavoriteButton,
+    // CardPayPage
   },
 
   data: () => ({
+    show: false
   }),
 
   computed: {
