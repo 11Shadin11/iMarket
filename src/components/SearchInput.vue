@@ -22,7 +22,8 @@ export default {
   padding: 0 0 0 8px;
 }
 .search-input {
-  color: #8e8e93;
+  color: #000000;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   padding: auto;
   width: 100%;
   height: 100%;

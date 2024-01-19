@@ -1,6 +1,6 @@
 <template lang="pug">
 v-col(md="4")  
-  v-card.product-card(@click="openProductPage(product)")
+  //- v-card.product-card(@click="openProductPage(product)")
     v-img.product-card-image(:src="require(`@/assets/${product.img}`)")
     div
       span.item-name {{ product.name }}
@@ -13,15 +13,15 @@ v-col(md="4")
       span.item-name(style="color: #fc8507") {{ product.price }}
 
     BasketButtons(:selectedProduct="product")
-//- .product-card(@click="openProductPage(product)")
-//-   .product-image
-//-     v-img( width="50%" height="auto" :src="require(`@/assets/${product.img}`)")
-//-   .product-info
-//-     span {{ product.name }}
-//-     span {{ product.description }}
-//-     p(style="text-decoration:line-through") {{ product.discount }}
-//-     span(style="color:#fc8507") {{product.price}}
-//-     BasketButtons(:selectedProduct="product")
+  .product-card(@click="openProductPage(product)")
+    .product-image
+      v-img( width="50%" height="auto" :src="require(`@/assets/${product.img}`)")
+    .product-info
+      span {{ product.name }}
+      span {{ product.description }}
+      p(style="text-decoration:line-through") {{ product.discount }}
+      span(style="color:#fc8507") {{product.price}}
+      BasketButtons(:selectedProduct="product")
 </template>
 
 <script>

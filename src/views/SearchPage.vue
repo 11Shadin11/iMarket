@@ -1,11 +1,11 @@
 <template lang="pug">
 .search-list
-  .searched-product-length(v-show=" searchBlockFlag && findedProducts.length ") Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
-  .searched-product-length(v-show=" searchBlockFlag && !findedProducts.length ") По вашему запросу товаров сейчас нет.
+  .searched-product-length(v-if="searchBlockFlag && findedProducts && findedProducts.length ") Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
+  .searched-product-length(v-if="searchBlockFlag && !findedProducts.length ") По вашему запросу товаров сейчас нет.
   
-  
-  div( v-for="item in findedProducts" :key="item.id")
-    ProductCard(:product="item" @openProductPage="openProductPage")
+  .fined-product
+    div( v-for="item in findedProducts" :key="item.id")
+      ProductCard(:product="item" @openProductPage="openProductPage")
 </template>
 
 <script>
@@ -45,11 +45,18 @@ export default {
 
 <style scoped>
 .search-list {
-  margin-top: 60px;
+  margin: 100px 100px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  font-size: 25px;
+}
+.fined-product {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
