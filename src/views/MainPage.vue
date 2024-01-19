@@ -5,8 +5,8 @@ div
     h2 Популярные категории ⭐
 
   .categoriesList
-    div(v-for="el in categories", md="4")
-      .icon-categories(@click="showProductWithCategory(el)")
+    div(v-for="el in categories")
+      .icon-categories(@click="showProductWithCategory(el)" :class="{'selected-category' : el.mdi == selectedCategory.mdi}")
         v-icon(color="#2d2d2d") {{ el.mdi }}
 
   div
@@ -61,7 +61,7 @@ export default {
   },
 
   data: () => ({
-    selectedCategory: null,
+    selectedCategory: '',
     sectionName: "Горячие скидки 🔥"
   }),
 
@@ -87,8 +87,14 @@ export default {
     ...mapMutations('market', ['setProductInBasket', 'setProductInFavorits', 'setSelectedProduct']),
 
     showProductWithCategory(el) {
-      this.sectionName = category[el.mdi]
-      this.selectedCategory = el
+      if(this.selectedCategory != el) {
+        this.sectionName = category[el.mdi]
+        this.selectedCategory = el
+      }
+      else {
+        this.sectionName = "Горячие скидки 🔥"
+        this.selectedCategory = ''
+      }
     },
 
     checkProdutInBacket(itemId) {
@@ -181,6 +187,10 @@ export default {
 .searched-product-length {
   padding: 20px 0;
   font-size: 20px;
+}
+
+.selected-category {
+  box-shadow: 0px 0px 10px #000;
 }
 
 </style>

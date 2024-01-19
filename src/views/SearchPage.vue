@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .search-list {
-  margin: 100px 100px;
+  margin: 100px 0;
   width: 100%;
   display: flex;
   flex-direction: column;
