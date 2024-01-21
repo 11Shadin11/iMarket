@@ -1,38 +1,31 @@
 <template lang="pug">
-div
-  v-app-bar( color="#00001f" app)
-    div.font-weight-bold.white--text.d-flex
-      v-app-bar-nav-icon
-        v-icon(color="red") mdi-cart-heart
-      v-app-bar-title.d-flex.align-center iMarket
+.header
+  div.font-weight-bold.white--text.d-flex(v-if="!checkDeviceWidth")
+    v-icon(color="red") mdi-cart-heart
+    .d-flex.align-center.h1 iMarket
+  
+  div.headeMenu(:class="{'fullWidth': checkDeviceWidth}")
+    .d1
+      SearchInput(@input="searchValue")
     
-    div.headeMenu(:class="{'fullWidth': checkDeviceWidth}")
-      div.d1
-        SearchInput(@input="searchValue")
-        //- input.pl-10( type="text" placeholder="Искать здесь..." @input="searchValue($event.target.value)")
-        //- v-icon( color="#fff") mdi-shopping-search
-      
-      div( v-if="!checkDeviceWidth")
-        v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
-          v-icon( color="#fff") mdi-store
+    div( v-if="!checkDeviceWidth")
+      v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
+        v-icon( color="#fff") mdi-store
 
-      div.backet( v-if="!checkDeviceWidth")
-        v-btn( color="#e9712b" fab small @click="$router.push({path:'/basket'})")
-          v-icon( color="#fff") mdi-basket-fill
-        .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
-                
-      div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer")
-        v-icon( color="#fff") mdi-bell-outline
-      
-      div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
-        v-icon( color="#fff") mdi-heart-outline
-        .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
-      
-      //- div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="")
-        img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
-
-      //- div.imgBox.px-20
-        img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
+    div.backet( v-if="!checkDeviceWidth")
+      v-btn( color="#e9712b" fab small @click="$router.push({path:'/basket'})")
+        v-icon( color="#fff") mdi-basket-fill
+      .backetNew(v-if="checkNewProduct" :data-dynamic-text="checkNewProduct")
+              
+    div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer")
+      v-icon( color="#fff") mdi-bell-outline
+    
+    div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
+      v-icon( color="#fff") mdi-heart-outline
+      .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
+    
+    //- div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="")
+      img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
 </template>
 
 <script>
@@ -79,6 +72,7 @@ export default {
       }
 
       else{
+        this.setFindedProducts(null)
         this.setSearchBlockFlag(false)
       }
 
@@ -87,29 +81,13 @@ export default {
 }
 </script>
 <style scoped>
-header {
-  /* border-radius: 0 0 30px 30px !important; */
+.header {
+  padding: 0 10px;
+  height: 50px;
+  background: #00001f;
+  display: flex;
+  justify-content: space-between;
   z-index: 101 !important;
-  /* background: linear-gradient(149deg,  rgba(102, 0, 255, 0.74) 0%, rgb(118, 78, 204) 42%,rgb(180, 90, 154) 72%, rgb(191, 51, 51) 100%) !important;
-  animation: gradient .1s infinite linear !important; */
-}
-
-/* @keyframes gradient {
-  0% {
-    border-radius: 0 0 30px 30px !important;
-    background-position: 100% 0%;
-  }
-  50% {
-    background-position: 30% 100%;
-  }
-  100% {
-    background-position: 100% 0%;
-  }
-} */
-form {
-  position: relative;
-  width: 300px;
-  margin: 0 auto;
 }
 .d1 {
   display: flex;

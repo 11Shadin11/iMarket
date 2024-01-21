@@ -8,6 +8,14 @@ div.footer.footer-background-white
         title='Главная'
         routeName="MainPage"
       )
+    
+        //- :img="'mdi-magnify'"
+    //- router-link.text-decoration.img(to="/searchPage")
+    //-   FooterMenuButton(
+    //-     :img="'mdi-shopping-search-outline'"
+    //-     title='Поиск'
+    //-     routeName="SearchPage"
+    //-   )
 
     router-link.text-decoration.img(to="/favoriteProductsPage")
       FooterMenuButton(

@@ -9,12 +9,12 @@ div
       .icon-categories(@click="showProductWithCategory(el)" :class="{'selected-category' : el.mdi == selectedCategory.mdi}")
         v-icon(color="#2d2d2d") {{ el.mdi }}
 
-  div
+  .product
     h1.text-h4.py-5 {{sectionName}}
 
-    v-row.mx-2.mb-3
-      //- ProductCard(v-for="item in productList" :product="item" :key="item.id")
-      v-col(v-for="item in productList" :key="item.id" md="4")
+    .product-list
+      ProductCard(v-for="item in productList" :product="item" :key="item.id")
+      //- v-col(v-for="item in productList" :key="item.id" md="4")
         v-card.product-card(@click="openProductPage(item)")
           v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
           div
@@ -192,5 +192,9 @@ export default {
 .selected-category {
   box-shadow: 0px 0px 10px #000;
 }
-
+.product-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 </style>

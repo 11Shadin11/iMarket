@@ -4,7 +4,7 @@
     v-icon( v-if="!checkRouterName(routeName)" color="#e9712b") {{ img }}
     v-icon( v-else color="#e9712b") {{ img.replace('-outline', '') }}
   .footer-text
-    .text-11.footer-text-fonts {{title}}
+    .text-13.footer-text-fonts {{title}}
 </template>
   
   <script> 
@@ -13,7 +13,6 @@
     props: {
       img:null,
       title: null,
-      // activeImage: null,
       routeName: null,
     },
     

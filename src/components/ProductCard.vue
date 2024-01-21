@@ -1,73 +1,145 @@
 <template lang="pug">
-v-col(md="4")  
-  //- v-card.product-card(@click="openProductPage(product)")
-    v-img.product-card-image(:src="require(`@/assets/${product.img}`)")
-    div
-      span.item-name {{ product.name }}
-    div
-      p.item-name {{ product.description }}
-
-    v-card-text
-      p(style="text-decoration: line-through") {{ product.discount }}
-    v-card-title
-      span.item-name(style="color: #fc8507") {{ product.price }}
-
-    BasketButtons(:selectedProduct="product")
-  .product-card(@click="openProductPage(product)")
-    .product-image
-      v-img( width="50%" height="auto" :src="require(`@/assets/${product.img}`)")
+.product-item(@click="openProductPage(product)")
+  .product-img
+    img( :src="require(`@/assets/${product.img}`)")
+  .product-list
     .product-info
-      span {{ product.name }}
-      span {{ product.description }}
-      p(style="text-decoration:line-through") {{ product.discount }}
-      span(style="color:#fc8507") {{product.price}}
+      .h4-b {{ product.name }}
+      .text-13 {{ product.description }}
+      .stars
+        v-icon mdi-star-outline
+      .price.text-13(style="text-decoration:line-through") {{ product.discount }}
+      .price {{product.price}}
+
+    .actions
       BasketButtons(:selectedProduct="product")
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import BasketButtons from '@/components/BasketButtons.vue'
+import { mapMutations } from "vuex";
+import BasketButtons from "@/components/BasketButtons.vue";
 
 export default {
-
-  name: 'ProductCard',
+  name: "ProductCard",
 
   components: {
-    BasketButtons
+    BasketButtons,
   },
 
   props: {
-    product: null
+    product: null,
   },
 
   methods: {
-    ...mapMutations('market', ['setSelectedProduct', 'setSearchBlockFlag']),
+    ...mapMutations("market", ["setSelectedProduct", "setSearchBlockFlag"]),
 
-    openProductPage(item){
-      this.$emit('openProductPage', item)
+    openProductPage(item) {
+      this.$emit("openProductPage", item);
     },
-  }
-
-}
+  },
+};
 </script>
 
 <style scoped>
 * {
- box-sizing: border-box;
+  box-sizing: border-box;
 }
-.product-card {
-  width: 300px;
-  min-height: 500px;
-  max-height: 600px;
-  padding: 20px;
+.product-item {
   border-radius: 10px;
-  /* box-shadow: inset 1px 1px 10px #000; */
-  background: #fff;
-  overflow: hidden;
+  width: 350px;
   margin: 20px;
-  box-shadow: 0px 0px 10px #000;
+  padding: 10px 10px 5px 10px;
+  border: 1px solid #eee;
+  background: white;
+  overflow: hidden;
+  transition: 0.4s linear;
+  display: flex;
+  flex-direction: column;
 }
-.product-image {
-  height: 50%;
+.product-img {
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  transition: 1s ease-in-out;
 }
+.product-img:hover {
+  transform: scale(1.1);
+}
+.product-img img {
+  display: block;
+  width: 300px;
+  height: auto;
+}
+.product-list {
+  height: 60%;
+  margin-top: 15px;
+}
+.product-info {
+  height: 60%;
+}
+.price {
+  color: #e34d38;
+  display: block;
+  margin-bottom: 12px;
+}
+.stars {
+  height: 14px;
+  line-height: 14px;
+  margin: 20px 0;
+}
+/* .stars:after {
+  content: "\f04d0\f04ce\f04ce\f04ce\f006";
+  color: #efb71c;
+  font-size: 14px;
+  font-family: FontAwesome;
+} */
+.actions {
+  height: 20%;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+/* .actions:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.add-to-cart,
+.add-to-links {
+  float: left;
+}
+.cart-button {
+  text-decoration: none;
+  color: #8c877c;
+  padding-right: 20px;
+  border-right: 1px solid #ddd;
+  transition: 0.4s linear;
+}
+.cart-button:before {
+  content: "\f07a";
+  font-family: FontAwesome;
+  margin-right: 10px;
+}
+.add-to-cart:hover .cart-button,
+.wishlist:hover,
+.compare:hover {
+  color: #e34d38;
+} */
+/* .wishlist,
+.compare {
+  color: #8c877c;
+  padding-left: 20px;
+  transition: 0.4s linear;
+}
+.wishlist:after,
+.compare:after {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-size: 13px;
+}
+.wishlist:after {
+  content: "\f004";
+}
+.compare:after {
+  content: "\f079";
+} */
 </style>

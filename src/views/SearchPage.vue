@@ -1,11 +1,11 @@
 <template lang="pug">
 .search-list
-  .searched-product-length(v-if="searchBlockFlag && findedProducts && findedProducts.length ") Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
-  .searched-product-length(v-if="searchBlockFlag && !findedProducts.length ") По вашему запросу товаров сейчас нет.
+  .searched-product-length.h4 {{findedProductInfo}}
+  //- .searched-product-length(v-if="searchBlockFlag && findedProducts && findedProducts.length ") Мы нашли {{findedProducts.length}} товар(а) по вашем запросу.
+  //- .searched-product-length(v-if="searchBlockFlag && !findedProducts.length ") По вашему запросу товаров сейчас нет.
   
   .fined-product
-    div( v-for="item in findedProducts" :key="item.id")
-      ProductCard(:product="item" @openProductPage="openProductPage")
+    ProductCard( v-for="item in findedProducts" :key="item.id" :product="item" @openProductPage="openProductPage")
 </template>
 
 <script>
@@ -21,7 +21,12 @@ export default {
   },
 
   computed: {
-    ...mapState('market', ['searchBlockFlag', 'findedProducts'])
+    ...mapState('market', ['searchBlockFlag', 'findedProducts']),
+
+    findedProductInfo() {
+      console.log(this.findedProducts);
+      return this.findedProducts?.length ? `Мы нашли ${this.findedProducts.length} товар(а) по вашем запросу.` : 'По вашему запросу товаров сейчас нет.'
+    }
   },
 
   methods: {
@@ -58,5 +63,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.searched-product-length {
+  text-align: center;
 }
 </style>

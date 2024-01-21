@@ -4,6 +4,7 @@ import MainPage from '../views/MainPage.vue'
 import DeviceView from '../views/DeviceView.vue'
 import Basket from '../views/Basket.vue'
 import FavoriteProductsPage from '../views/FavoriteProductsPage.vue'
+import SearchPage from '@/views/SearchPage.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/favoriteProductsPage',
     name: 'FavoriteProductsPage',
     component: FavoriteProductsPage
+  },
+  {
+    path: '/searchPage',
+    name: 'SearchPage',
+    component: SearchPage
   },
 ]
 

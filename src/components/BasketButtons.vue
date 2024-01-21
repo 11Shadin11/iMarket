@@ -1,11 +1,11 @@
 <template lang="pug">
 div.backet-button-block
   div
-    v-btn.backet-button( v-if="!checkProdutInBacket(selectedProduct.id)" color="primary" elevation="10" @click.stop="addToBacket(selectedProduct)") Добавить в корзину
+    v-btn.backet-button( v-if="!checkProdutInBacket(selectedProduct.id)" color="primary" elevation="10" @click.stop="addToBacket(selectedProduct)") В корзину
     v-btn.backet-button( v-else color="primary" elevation="10" @click.stop="goToBacket") В корзине
       v-icon mdi-basket-check
   
-  v-btn.backet-button(color="green") Купить
+  //- v-btn.backet-button(color="green") Купить
   
   FavoriteButton(:selectedProduct="selectedProduct")
 </template>
