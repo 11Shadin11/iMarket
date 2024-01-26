@@ -5,29 +5,14 @@ div
     h2 Популярные категории ⭐
 
   .categoriesList
-    div(v-for="el in categories")
-      .icon-categories(@click="showProductWithCategory(el)" :class="{'selected-category' : el.mdi == selectedCategory.mdi}")
-        v-icon(color="#2d2d2d") {{ el.mdi }}
+    .icon-categories( v-for="el in categories" @click="showProductWithCategory(el)" :class="{'selected-category' : el.mdi == selectedCategory.mdi}")
+      v-icon(:color="theme == 'dark' ? '#ffffff' : '#000000' ") {{ el.mdi }}
 
   .product
     h1.text-h4.py-5 {{sectionName}}
 
     .product-list
-      ProductCard(v-for="item in productList" :product="item" :key="item.id")
-      //- v-col(v-for="item in productList" :key="item.id" md="4")
-        v-card.product-card(@click="openProductPage(item)")
-          v-img.product-card-image(:src="require(`@/assets/${item.img}`)")
-          div
-            span.item-name {{ item.name }}
-          div
-            p.item-name {{ item.description }}
-
-          v-card-text
-            p(style="text-decoration: line-through") {{ item.discount }}
-          v-card-title
-            span.item-name(style="color: #fc8507") {{ item.price }}
-
-          BasketButtons(:selectedProduct="item")
+      ProductCard(v-for="item in productList" :product="item" :key="item.id" @openProductPage="openProductPage(item)")
 </template>
 
 <script>
@@ -76,7 +61,7 @@ export default {
   },
 
   computed: {
-    ...mapState('market', ['product', 'categories', 'backetProduts', 'deviceWidth']),
+    ...mapState('market', ['product', 'categories', 'backetProduts', 'deviceWidth', 'theme']),
 
     productList() {
       return this.selectedCategory ? this.product.filter(p => p.category == category[this.selectedCategory.mdi]) : this.product
@@ -121,26 +106,6 @@ export default {
 
 <style scoped>
 
-@media (hover: hover) {
-  .v-card:hover {
-    box-shadow: 0 0 10px #000;
-  }
-}
-
-.v-card {
-  padding: 20px !important;
-  height: 100%;
-  cursor: pointer;
-  transform: scale(1);
-  transition: transform 1s;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  transition: box-shadow 0.5s;
-}
-
 .item-name {
   word-break: break-word;
 }
@@ -150,7 +115,7 @@ export default {
   margin: 10px;
   width: 60px;
   border-radius: 20px;
-  background: #fff;
+  background: var(--container-bg-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,12 +124,6 @@ export default {
 
 .icon-categories:hover {
   box-shadow: 0px 0px 10px #000;
-}
-
-.v-card__subtitle,
-.v-card__text,
-.v-card__title {
-  padding: 5px !important;
 }
 
 .categoriesList {
@@ -194,7 +153,7 @@ export default {
 }
 .product-list {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
 }
 </style>

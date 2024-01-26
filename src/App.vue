@@ -1,6 +1,6 @@
 <template lang="pug">
 v-app(id="app" )
-  Header
+  Header(@changeTheme="changeTheme()")
 
   v-main(v-show="!searchBlockFlag")
     v-container( class="pt-5")
@@ -17,8 +17,8 @@ import { mapMutations, mapState } from 'vuex';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import MobileFooterMenu from './components/MobileFooterMenu.vue';
-
 import SearchPage from './views/SearchPage.vue';
+
 export default {
   name: 'App',
 
@@ -30,8 +30,6 @@ export default {
   },
 
   data: () => ({
-    timeout: true,
-    width: null
   }),
 
   computed: {
@@ -39,7 +37,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations('market', ['setDeviceWidth'])
+    ...mapMutations('market', ['setDeviceWidth', 'changeTheme'])
   },
   
   created() {
@@ -49,14 +47,39 @@ export default {
     this.$on('hook:beforeDestroy', () => window.removeEventListener('resize', onResize))
   },
 
-  mounted() {
-    setTimeout(() => {
-      this.timeout = !this.timeout
-    }, 1500);
+  beforeMount() {
+    document.addEventListener("DOMContentLoaded", ()=>{
+      if(localStorage.getItem('theme') && localStorage.getItem('theme') == 'dark') {
+        document.documentElement.setAttribute("theme", "dark");
+      }
+      else {
+        document.documentElement.setAttribute("theme", "light");
+      }
+    })
   }
 };
 </script>
+
 <style>
+:root{
+  --panel-bg-color: #eeeeee;
+  --container-bg-color: #ffffff;
+  --text-color: #000000DE;
+  --header-color: #00001f;
+}
+:root[theme='light']{
+  --panel-bg-color: #eeeeee;
+  --container-bg-color: #ffffff;
+  --text-color: #000000DE;
+  --header-color: #00001f;
+}
+:root[theme='dark'] {
+  --panel-bg-color: #2f3542;
+  --container-bg-color: #57606f;
+  --text-color: #ced6e0;
+  --header-color: #57606f;
+}
+
 * {
   margin: 0px;
   padding: 0px;
@@ -77,7 +100,9 @@ export default {
   background-color: #f9f9fd;
 }
 #app{
-  background:#eeeeee
+  transition: background 0.4s linear;
+  background: var(--panel-bg-color);
+  color: var(--text-color);
 }
 .loading-screen {
   display: flex;

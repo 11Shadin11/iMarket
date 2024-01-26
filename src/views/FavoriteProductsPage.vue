@@ -1,45 +1,54 @@
 <template lang="pug">
-v-col(md="10").paymentsBlock
-  span.title(v-if="favoritProducts.length") Избранные товары
-  span.title(v-else) Избранных товаров нет. Воспользуйтесь поиском, чтобы найти всё, что нужно.
-  div.mainInfo
-    div(v-for="(el, index) in favoritProducts")
-      .favorit-produt-card
-        v-img( width="25%" :src="require(`@/assets/${el.img}`)")
-        div
-          span {{el.name}}
-          span {{productPrice(el)}}
-        
-        div
-          FavoriteButton(:selectedProduct="el")
+div
+  v-row
+    v-col
+      v-breadcrumbs( :items="breadcrumbs" large)
+  panel
+    .title {{ favoritProducts.length ? 'Избранные товары' : 'Избранных товаров нет. Воспользуйтесь поиском, чтобы найти всё, что нужно.'}} 
+    .mainInfo
+      product-card(v-for="el in favoritProducts" :key="el.name" :product="el")
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import FavoriteButton from '@/components/FavoriteButton.vue';
+import ProductCard from '@/components/ProductCard.vue';
+import Panel from '@/components/Panel.vue';
+
 export default {
   name: "FavoriteProductsPage",
 
   components: {
-    FavoriteButton
+    FavoriteButton,
+    ProductCard,
+    Panel
   },
 
   computed: {
-    ...mapState('market', ['favoritProducts'])
-  },
+    ...mapState('market', ['favoritProducts']),
 
-  methods: {
-    productPrice(el) {
-      return (el.price.replaceAll(' ', '').replace('₽', '') * el.quantity).toLocaleString('en-US').replace(/,/g, ' ') + ' ₽'
+    breadcrumbs() {
+      return [
+        {
+          text: 'Главная',
+          disabled: false,
+          href: '/'
+        },
+        {
+          text: 'Избранное',
+          disabled: true,
+          href: 'favoriteProductsPage'
+        }
+      ]
     },
   },
-
-  mounted() {
-  }
 
 }
 </script>
 
 <style scoped>
-
+.mainInfo {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

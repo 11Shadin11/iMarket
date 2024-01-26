@@ -4,6 +4,8 @@ export default {
 
   state : {
     
+    theme: localStorage.getItem('theme') || 'light',
+
     product: products.produts,
 
     categories: products.categories,
@@ -19,12 +21,6 @@ export default {
     deviceWidth: 0,
 
     favoritProducts: []
-  },
-
-  getters: {
-    // deviceWidth() {
-    //   return window.innerWidth < 1000
-    // }
   },
 
   mutations:{
@@ -48,7 +44,9 @@ export default {
 
     turnDownProductQuantity(state, el) {
       let elIdx = state.backetProduts.findIndex(e => el.id === e.id && e.quantity > 1)
-      state.backetProduts.splice(elIdx, 1, { ...state.backetProduts[elIdx], quantity: state.backetProduts[elIdx].quantity - 1 })
+      if(elIdx != -1) {
+        state.backetProduts.splice(elIdx, 1, { ...state.backetProduts[elIdx], quantity: state.backetProduts[elIdx].quantity - 1 })
+      }
     },
     
     setSearchBlockFlag(state, flag) {
@@ -68,8 +66,20 @@ export default {
     remove(state, el) {
       let elIdx = state.backetProduts.findIndex(e => el.id === e.id)
       state.backetProduts.splice(elIdx, 1)
+    },
+
+    changeTheme(state) {
+      if(document.documentElement.attributes.theme.value == "light") {
+        localStorage.setItem('theme', 'dark')
+        document.documentElement.setAttribute("theme", "dark");
+        state.theme = 'dark'
+      }
+      else {
+        localStorage.setItem('theme', 'light')
+        document.documentElement.setAttribute("theme", "light");
+        state.theme = 'light'
+      }
     }
   }
 
 }
-  

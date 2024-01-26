@@ -1,12 +1,12 @@
 <template lang="pug">
 .header
-  div.font-weight-bold.white--text.d-flex(v-if="!checkDeviceWidth")
+  div.font-weight-bold.white--text.d-flex
     v-icon(color="red") mdi-cart-heart
     .d-flex.align-center.h1 iMarket
   
-  div.headeMenu(:class="{'fullWidth': checkDeviceWidth}")
+  div.headeMenu
     .d1
-      SearchInput(@input="searchValue")
+      SearchInput(@input="searchValue" @blur="blur")
     
     div( v-if="!checkDeviceWidth")
       v-btn( color="#e9712b" fab small @click="$router.push({path:'/'})")
@@ -23,6 +23,9 @@
     div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="$router.push({path:'/favoriteProductsPage'})")
       v-icon( color="#fff") mdi-heart-outline
       .backetNew(v-if="favoritProducts.length" :data-dynamic-text="favoritProducts.length")
+    
+    div.px-20(@click="$emit('changeTheme')")
+      v-icon( :color="theme == 'light' ? '#ffffff' : '#000000'") mdi-theme-light-dark
     
     //- div.px-20(v-if="!checkDeviceWidth" style="cursor:pointer" @click="")
       img( src="https://w7.pngwing.com/pngs/75/697/png-transparent-avatars-accounts-man-male-people-person-turtleneck-sunglasses-beard-wavy-hair-male-avatars-free-d-illustration.png")
@@ -46,7 +49,7 @@ export default {
   }),
 
   computed: {
-    ...mapState('market', ['backetProduts', 'product', 'favoritProducts', 'deviceWidth']),
+    ...mapState('market', ['backetProduts', 'product', 'favoritProducts', 'deviceWidth', 'searchBlockFlag', 'theme']),
 
 
     checkNewProduct() {
@@ -61,6 +64,13 @@ export default {
 
   methods: {
     ...mapMutations('market', ['setSearchBlockFlag', 'setFindedProducts']),
+
+    blur() {
+      setTimeout(() => {
+        this.setSearchBlockFlag(false)
+        document.getElementById('search-input').value = ''
+      }, 500);
+    },
 
     searchValue(text) {
       text = text.trim().toLowerCase()
@@ -82,9 +92,10 @@ export default {
 </script>
 <style scoped>
 .header {
+  transition: background 0.4s linear;
   padding: 0 10px;
-  height: 50px;
-  background: #00001f;
+  height: 60px;
+  background: var(--header-color);
   display: flex;
   justify-content: space-between;
   z-index: 101 !important;

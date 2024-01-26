@@ -1,6 +1,6 @@
 <template lang="pug">
 .search
-  input.search-input.h4(placeholder="Искать на iMarket" @input="$emit('input', $event.target.value)") 
+  input.search-input.h4#search-input(placeholder="Искать на iMarket" @input="$emit('input', $event.target.value)" @blur="$emit('blur')") 
   .img-search
     img(src="@/assets/search.svg")
 </template>

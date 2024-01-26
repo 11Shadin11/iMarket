@@ -57,7 +57,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  font-size: 25px;
+  /* font-size: 25px; */
 }
 .fined-product {
   display: flex;
